@@ -61,12 +61,41 @@
       background:black;
       position: absolute;
       top:50%;
+      transition: all 0.15s;
+      transition-timing-function: cubic-bezier(.1,2.7,.58,1);
+      transform-origin: 100%;
     }
 
   </style>
 
   <script>
+    function updateClock(){
+      var now = new Date();
+      var seconds = now.getSeconds();
+      var minutes = now.getMinutes();
+      var hours = now.getHours();
 
+      var secDeg = ((seconds /60) * 360) + 90;
+      var minDeg = ((minutes /60) * 360) + 90;
+      var hourDeg = ((hours /12) * 360) + 90;
+
+      var hourHand = document.querySelector(".hour-hand");
+      var minHand = document.querySelector(".min-hand");
+      var secHand = document.querySelector(".second-hand");
+
+      if (seconds == 0) {
+        secHand.style.transition = "none";
+      } else {
+        secHand.style.transition = ""
+      }
+
+      secHand.style.transform = `rotate(${secDeg}Deg)`;
+      minHand.style.transform = `rotate(${minDeg}Deg)`;
+      hourHand.style.transform = `rotate(${hourDeg}Deg)`;
+      setTimeout(updateClock,1000);
+    }
+
+    setTimeout(updateClock,1000);
 
   </script>
 </body>
